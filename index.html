@@ -18,6 +18,7 @@
           atrr: "src",
           img: "https://picsum.photos/200/300",
           text: "<h1>hola mundo</h1>",
+          simpleText: "hola mundo",
           counter: 0,
           evt: 'submit'
         };
@@ -29,6 +30,10 @@
         submit(e) {
           // e.preventDefault();
           console.log("enviado", e);
+        },
+        input(e) {
+          console.log("input", e);
+          this.simpleText = e.target.value;
         }
       },
       // uso de v-text para pasar texto a mostrar por una varible
@@ -47,12 +52,35 @@
       // <button v-on:keyup="increment">{{ counter }}</button>
 
       //<form v-on:submit.prevent.stop="submit">
-          //   < button > {{ counter }}</button >
-          // </form>
+      //   < button > {{ counter }}</button >
+      // </form>
+
+      //<form v-on:[evt]="submit">
+      //   < button > {{ counter }}</button >
+      // </form >
+
+      // v-on se puede remplazar po @ y v-bind por : que el on es de eventos y el bind es de atributos
+
+      // v-model es para enlazar un input con una variable de forma bidireccional reactiva
       template: `
-         <form v-on:[evt]="submit">
-            <button >{{ counter }}</button>
+        <div>
+          <h1 v-once v-text="text"></h1>
+          <div v-once v-html="text"></div>
+          <img v-bind:src="img" v-bind:alt="img">
+          <img v-bind:[atrr]="img">
+          <button v-on:keyup="increment">{{ counter }}</button>
+          <form v-on:submit.prevent.stop="submit">
+            <button>{{ counter }}</button>
           </form>
+          <form v-on:[evt]="submit">
+            <button>{{ counter }}</button>
+          </form>
+
+          <p>{{ simpleText }}</p>
+          <input type="text" v-on:change="input">
+          <input type="text" @input="input" :value="simpleText">
+          <input type="text" v-model="simpleText">
+        </div>
       `
     }).mount('#app');
     console.log(vm);
