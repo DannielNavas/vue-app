@@ -16,8 +16,20 @@
       data() {
         return {
           atrr: "src",
-          img: "https://picsum.photos/200/300"
+          img: "https://picsum.photos/200/300",
+          text: "<h1>hola mundo</h1>",
+          counter: 0,
+          evt: 'submit'
         };
+      },
+      methods: {
+        increment() {
+          this.counter++;
+        },
+        submit(e) {
+          // e.preventDefault();
+          console.log("enviado", e);
+        }
       },
       // uso de v-text para pasar texto a mostrar por una varible
       // <h1 v-once v-text="text"></h1>
@@ -30,8 +42,17 @@
 
       // uso de v-bind de forma dinamica
       // <img v-bind:[atrr]="img">
+
+      // uso de v-on para escuchar eventos todos los de js
+      // <button v-on:keyup="increment">{{ counter }}</button>
+
+      //<form v-on:submit.prevent.stop="submit">
+          //   < button > {{ counter }}</button >
+          // </form>
       template: `
-          <img v-bind:[atrr]="img">
+         <form v-on:[evt]="submit">
+            <button >{{ counter }}</button>
+          </form>
       `
     }).mount('#app');
     console.log(vm);
