@@ -9,19 +9,29 @@
 <body>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <div id="app">
-    {{ text }}
   </div>
 
   <script>
     const vm = Vue.createApp({
       data() {
         return {
-          text: '<h1>Hello World</h1>'
+          atrr: "src",
+          img: "https://picsum.photos/200/300"
         };
       },
+      // uso de v-text para pasar texto a mostrar por una varible
       // <h1 v-once v-text="text"></h1>
+
+      // uso de v-html para pasar texto a mostrar por una varible pero este texto viene enriquesido con html
+      //<div v-once v-html="text"></div>
+
+      // uso de v-bind de forma fija
+      // <img v-bind:src="img" v-bind:alt="img">
+
+      // uso de v-bind de forma dinamica
+      // <img v-bind:[atrr]="img">
       template: `
-          <div v-once v-html="text"></div>
+          <img v-bind:[atrr]="img">
       `
     }).mount('#app');
     console.log(vm);
