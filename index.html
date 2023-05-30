@@ -20,7 +20,10 @@
           text: "<h1>hola mundo</h1>",
           simpleText: "hola mundo",
           counter: 0,
-          evt: 'submit'
+          evt: 'submit',
+          firstName: "Danniel",
+          lastName: "Navas",
+          now: new Date()
         };
       },
       methods: {
@@ -34,6 +37,15 @@
         input(e) {
           console.log("input", e);
           this.simpleText = e.target.value;
+        }
+      },
+      // Separar codigo en las propiedades computadas ventaja son reactivas
+      computed: {
+        fullName() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        today() {
+          return this.now.toLocaleDateString();
         }
       },
       // uso de v-text para pasar texto a mostrar por una varible
@@ -62,6 +74,7 @@
       // v-on se puede remplazar po @ y v-bind por : que el on es de eventos y el bind es de atributos
 
       // v-model es para enlazar un input con una variable de forma bidireccional reactiva
+
       template: `
         <div>
           <h1 v-once v-text="text"></h1>
@@ -80,6 +93,11 @@
           <input type="text" v-on:change="input">
           <input type="text" @input="input" :value="simpleText">
           <input type="text" v-model="simpleText">
+          <br>
+          <br>
+          <br>
+          <div>{{fullName}}</div>
+          <div>{{today}}</div>
         </div>
       `
     }).mount('#app');
