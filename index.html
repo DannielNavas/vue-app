@@ -25,7 +25,11 @@
           lastName: "Navas",
           now: new Date(),
           open: false,
-          door: 'la puerta esta abierta'
+          door: 'la puerta esta abierta',
+          styles: {
+            backgroundColor: '#e5e5e5',
+          },
+          userName: '',
         };
       },
       methods: {
@@ -48,6 +52,12 @@
         },
         today() {
           return this.now.toLocaleDateString();
+        },
+        stylesCom() {
+          return {
+            open: this.open,
+            closed: !this.open
+          }
         }
       },
       watch: {
@@ -59,9 +69,12 @@
 
         open(value) {
           if(value) {
-           this.door = 'la puerta esta abierta'
+           this.door = 'la puerta esta abierta';
+          //  this.styles.backgroundColor = '#b5e7a0';
           } else {
-            this.door = 'la puerta esta cerrada'
+            this.door = 'la puerta esta cerrada';
+            this.userName = '';
+            // this.styles.backgroundColor = '#eca1a6';
           }
         }
       },
@@ -120,15 +133,69 @@
           <br>
           <h2>watcher</h2>
           {{ simpleText }}
+          <!--
+             :style="styles"
+            :class="['open']"
+            :class="{'open': true}"
+            :class="{'open': open, 'closed': !open}"
+            -->
+          <div class="container"  :class="stylesCom">
+            <button @click="open = !open">{{open? 'cerrar': 'abrir'}}</button>
+            <h2>{{ door }}</h2>
+          </div>
 
           <div>
-            <button @click="open = !open">{{open? 'cerrar': 'abrir'}}</button>
-            <p>{{ door }}</p>
+            <h2>Condicionales</h2>
+            <div>{{door}}</div>
+            <div v-if="open">
+              <p>Hola {{userName}}</p>
+            </div>
+            <div v-else>
+              <input type="text" v-model="userName">
+            </div>
+            <button @click="open = !open">
+              <div v-if="!open">acceder</div>
+              <div v-else>Salir</div>
+            </button>
           </div>
         </div>
       `
     }).mount('#app');
     console.log(vm);
   </script>
+  <style>
+    html,
+    body {
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #app,
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      height: 300px;
+    }
+
+    button {
+      margin-top: 24px;
+      border: none;
+      background-color: white;
+      padding: 8px 24px;
+      border-radius: 12px;
+    }
+
+    .closed {
+      background-color: #eca1a6;
+    }
+
+    .open {
+      background-color: #b5e7a0;
+    }
+  </style>
 </body>
 </html>
