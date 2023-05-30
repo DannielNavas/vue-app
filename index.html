@@ -23,7 +23,9 @@
           evt: 'submit',
           firstName: "Danniel",
           lastName: "Navas",
-          now: new Date()
+          now: new Date(),
+          open: false,
+          door: 'la puerta esta abierta'
         };
       },
       methods: {
@@ -46,6 +48,21 @@
         },
         today() {
           return this.now.toLocaleDateString();
+        }
+      },
+      watch: {
+        //no se puede realizar su uso desde el template
+        // un watvher debe realizar una sola cosa si se necesita se puede llamar un method
+        simpleText(newVal, oldVal) {
+          console.log(newVal, oldVal);
+        },
+
+        open(value) {
+          if(value) {
+           this.door = 'la puerta esta abierta'
+          } else {
+            this.door = 'la puerta esta cerrada'
+          }
         }
       },
       // uso de v-text para pasar texto a mostrar por una varible
@@ -97,7 +114,17 @@
           <br>
           <br>
           <div>{{fullName}}</div>
+
           <div>{{today}}</div>
+          <br>
+          <br>
+          <h2>watcher</h2>
+          {{ simpleText }}
+
+          <div>
+            <button @click="open = !open">{{open? 'cerrar': 'abrir'}}</button>
+            <p>{{ door }}</p>
+          </div>
         </div>
       `
     }).mount('#app');
