@@ -12,7 +12,7 @@
   </div>
 
   <script>
-    const vm = Vue.createApp({
+    const app = Vue.createApp({
       data() {
         return {
           atrr: "src",
@@ -30,6 +30,20 @@
             backgroundColor: '#e5e5e5',
           },
           userName: '',
+          posts: [
+            {
+              title: 'titulo 1',
+              description: 'descripcion 1'
+            },
+            {
+              title: 'titulo 2',
+              description: 'descripcion 2'
+            },
+            {
+              title: 'titulo 3',
+              description: 'descripcion 3'
+            }
+          ]
         };
       },
       methods: {
@@ -106,7 +120,7 @@
       // v-model es para enlazar un input con una variable de forma bidireccional reactiva
 
       template: `
-        <div>
+
           <h1 v-once v-text="text"></h1>
           <div v-once v-html="text"></div>
           <img v-bind:src="img" v-bind:alt="img">
@@ -158,9 +172,39 @@
               <div v-else>Salir</div>
             </button>
           </div>
+
+          <div>
+            <h2>listas</h2>
+            <div>
+              <div class="item" v-for="(item, index) in posts" :key="index">
+                <h4>{{item.title}}</h4>
+                <p>{{item.description}}</p>
+              </div>
+            </div>
+        </div>
+
+
+        <div>
+            <h2>Componentes</h2>
+            <div>
+              <item class="item" v-for="(item, index) in posts" :key="index" :post="item" />
+            </div>
         </div>
       `
-    }).mount('#app');
+    });
+
+
+    app.component('item', {
+      props: ['post'],
+      template: `
+        <div class="item">
+          <h4>{{post.title}}</h4>
+          <p>{{post.description}}</p>
+        </div>
+      `
+    })
+
+    const vm = app.mount('#app');
     console.log(vm);
   </script>
   <style>
