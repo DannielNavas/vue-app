@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <div id="app">
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          text: 'default text'
+        }
+
+      },
+      methods: {
+      },
+      watch: {
+
+      },
+      template: `
+        <div>
+          <p>{{ text }}</p>
+          <v-button ref="elemento" :label="text"></v-button>
+        </div>
+      `
+    });
+
+    app.component('v-button', {
+      props: {
+        label: {
+          type: String,
+          required: true
+        },
+      },
+      methods: {
+
+      },
+      template: `
+        <button>{{ label }}</button>
+      `
+    })
+
+    const vm = app.mount('#app');
+    console.log(vm);
+    console.log(vm.$root); // root del objeto creado con createApp
+    console.log(vm.$el); // Accede a los elemenros del DOM
+    console.log(vm.$refs.elemento); // Crear referencias especificas a un componente
+    console.log(vm.$props); // Accede a los props del componente
+  </script>
+
+</body>
+
+</html>
